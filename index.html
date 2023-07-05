@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .container {
+            max-width: 800px;
+            width: 100%;
+            margin: auto;
+            background: #f4f4f4;
+            position: relative;
+
+        }
+
+        .qoute_box {
+            border: 2px solid black;
+            height: 300px;
+            border-radius: 10px;
+
+        }
+
+        #qoutetext{
+            text-align: center;
+            margin: 10px auto;
+            padding: 20px;
+        }
+
+        .btn {
+            position: absolute;
+            padding: 5px 20px;
+            height: 30px;
+            width: 100%;
+            margin: 0 auto;
+
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <div  id="qoutebox" class="qoute_box">
+            <p id="qoutetext"></p>
+
+        </div>
+        <button type="button" id="button" class="btn"> Get Random Qoute</button>
+
+    </div>
+
+    <script>
+
+        let button = document.getElementById('button')
+        button.addEventListener('click', getQuote);
+
+        const endpoint = 'https://api.whatdoestrumpthink.com/api/v1/quotes/random';
+
+      
+
+
+        async   function getQuote(){
+
+            try { 
+                const res = await fetch(endpoint);
+                if(!res.ok){
+                    throw Error (res.statusText)
+                }
+                const data = await res.json();
+                displayQuote(data.message);
+                console.log(displayQuote)
+
+            } catch (error) {
+                console.log(error);
+                alert('failed to fetch')
+            }
+        }
+
+            function displayQuote(qoute){
+                let qoutetext = document.getElementById('qoutetext')
+                qoutetext.textContent = qoute;
+            }
+
+
+    </script>
+</body>
+
+</html>
